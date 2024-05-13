@@ -117,10 +117,11 @@ class HomeFragment : Fragment() {
                                     movieId: Int,
                                     title: String,
                                     release: String,
-                                    imageUrl: String
+                                    imageUrl: String,
+                                    rating: Double
                                 ) {
                                     val favouriteMovie =
-                                        FavouriteMovie(movieId, title, release, imageUrl)
+                                        FavouriteMovie(movieId, title, release, imageUrl, rating)
                                     lifecycleScope.launch {
                                         val existingMovie =
                                             favRepository.getMovieById(favouriteMovie.movieId)
@@ -149,10 +150,11 @@ class HomeFragment : Fragment() {
                                     movieId: Int,
                                     title: String,
                                     release: String,
-                                    imageUrl: String
+                                    imageUrl: String,
+                                    rating: Double
                                 ) {
                                     val favouriteMovie =
-                                        FavouriteMovie(movieId, title, release, imageUrl)
+                                        FavouriteMovie(movieId, title, release, imageUrl, rating)
                                     lifecycleScope.launch {
                                         val existingMovie =
                                             favRepository.getMovieById(favouriteMovie.movieId)

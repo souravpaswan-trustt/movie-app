@@ -11,6 +11,7 @@
         <item name="ratingIconDrawable">@drawable/baseline_star_24</item>
         <item name="genreIconDrawable">@drawable/baseline_category_24</item>
         <item name="addFavouriteIconDrawable">@drawable/baseline_favorite_24</item>
+        <item name="removeFavouriteIconDrawable">@drawable/baseline_close_24</item>
         <item name="searchIconDrawable">@drawable/baseline_search_24</item>
         <item name="listToggleIconDrawable">@drawable/baseline_list_24</item>
         <item name="gridToggleIconDrawable">@drawable/baseline_grid_view_24</item>

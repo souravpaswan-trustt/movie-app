@@ -66,8 +66,8 @@ class MoviesListRVAdapter(
     interface MovieListRVAdapterClickListener {
         fun fetchGenre(genreIds: List<Int>): String
         fun movieOnClickListener(movieId: Int)
-        fun addToFavouriteOnClickListener(holder: MovieViewHolder, movieId: Int, title: String, release: String, imageUrl: String)
-        fun addToFavouriteObserver(holder: MovieViewHolder, movieId: Int, title: String, release: String, imageUrl: String)
+        fun addToFavouriteOnClickListener(holder: MovieViewHolder, movieId: Int, title: String, release: String, imageUrl: String, rating: Double)
+        fun addToFavouriteObserver(holder: MovieViewHolder, movieId: Int, title: String, release: String, imageUrl: String, rating: Double)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
@@ -97,12 +97,12 @@ class MoviesListRVAdapter(
                 Glide.with(holder.gridPosterImageView!!)
                     .load(imageUrl)
                     .into(holder.gridPosterImageView!!)
-                movieListRVAdapterClickListener.addToFavouriteObserver(holder, movies[position].id, movies[position].title, movies[position].release_date, imageUrl)
+                movieListRVAdapterClickListener.addToFavouriteObserver(holder, movies[position].id, movies[position].title, movies[position].release_date, imageUrl, movies[position].vote_average)
                 holder.gridRVLayout?.setOnClickListener {
                     movieListRVAdapterClickListener.movieOnClickListener(movies[position].id)
                 }
                 holder.gridAddToFavouritesImageView?.setOnClickListener {
-                    movieListRVAdapterClickListener.addToFavouriteOnClickListener(holder, movies[position].id, movies[position].title, movies[position].release_date, imageUrl)
+                    movieListRVAdapterClickListener.addToFavouriteOnClickListener(holder, movies[position].id, movies[position].title, movies[position].release_date, imageUrl, movies[position].vote_average)
                 }
 
             } else {
@@ -114,12 +114,12 @@ class MoviesListRVAdapter(
                 Glide.with(holder.moviePosterImageView!!)
                     .load(imageUrl)
                     .into(holder.moviePosterImageView!!)
-                movieListRVAdapterClickListener.addToFavouriteObserver(holder, movies[position].id, movies[position].title, movies[position].release_date, imageUrl)
+                movieListRVAdapterClickListener.addToFavouriteObserver(holder, movies[position].id, movies[position].title, movies[position].release_date, imageUrl, movies[position].vote_average)
                 holder.listRVLayout?.setOnClickListener {
                     movieListRVAdapterClickListener.movieOnClickListener(movies[position].id)
                 }
                 holder.addToFavouritesImageView?.setOnClickListener {
-                    movieListRVAdapterClickListener.addToFavouriteOnClickListener(holder, movies[position].id, movies[position].title, movies[position].release_date, imageUrl)
+                    movieListRVAdapterClickListener.addToFavouriteOnClickListener(holder, movies[position].id, movies[position].title, movies[position].release_date, imageUrl, movies[position].vote_average)
                 }
             }
         } else {

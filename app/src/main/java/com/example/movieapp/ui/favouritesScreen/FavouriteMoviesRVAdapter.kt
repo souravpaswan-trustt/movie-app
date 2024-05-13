@@ -11,11 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.movieapp.R
 import com.example.movieapp.database.FavouriteMovie
-import com.example.movieapp.utils.APIConstants
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class FavouriteMoviesRVAdapter(
-    private val favourites: List<FavouriteMovie>,
+    var favourites: List<FavouriteMovie>,
     private val favouriteMoviesRVAdapterClickListener: FavouriteMoviesRVAdapterClickListener) :
     RecyclerView.Adapter<FavouriteMoviesRVAdapter.FavouriteMovieViewHolder>() {
 
@@ -23,12 +21,13 @@ class FavouriteMoviesRVAdapter(
         val favouriteMovieTitleTextView: TextView = itemView.findViewById(R.id.favouriteMovieTitleTextView)
         val favouriteMovieImageView: ImageView = itemView.findViewById(R.id.favouriteMovieImageView)
         val favouriteMovieReleaseTextView: TextView = itemView.findViewById(R.id.favouriteMovieReleaseTextView)
-        val removeFavouriteButton: FloatingActionButton = itemView.findViewById(R.id.removeFavouriteButton)
+        val removeFavouriteButton: ImageView = itemView.findViewById(R.id.removeFavouriteButton)
+        val favouriteMovieRatingTextView: TextView = itemView.findViewById(R.id.favouriteMovieRatingTextView)
         val favListRVLayout: RelativeLayout = itemView.findViewById(R.id.favouriteListRelativeLayout)
     }
 
     interface FavouriteMoviesRVAdapterClickListener {
-        fun removeFavouriteOnClickListener(id: Int, name: String, release: String, url: String)
+        fun removeFavouriteOnClickListener(id: Int, name: String, release: String, url: String, rating: Double)
         fun showFavouriteMovieDetailsOnClick(movieId: Int)
     }
 
@@ -45,12 +44,14 @@ class FavouriteMoviesRVAdapter(
         if (!favourites.isNullOrEmpty()) {
             holder.favouriteMovieTitleTextView.text = favourites[position].movieName
             holder.favouriteMovieReleaseTextView.text = favourites[position].movieRelease
+            holder.favouriteMovieRatingTextView.text = favourites[position].movieRating.toString().substring(0,3)
             Glide.with(holder.favouriteMovieImageView)
                 .load(favourites[position].imageUrl)
                 .into(holder.favouriteMovieImageView)
             holder.removeFavouriteButton.setOnClickListener {
                 favouriteMoviesRVAdapterClickListener.removeFavouriteOnClickListener(favourites[position].movieId,
-                    favourites[position].movieName, favourites[position].movieRelease, favourites[position].imageUrl)
+                    favourites[position].movieName, favourites[position].movieRelease,
+                    favourites[position].imageUrl, favourites[position].movieRating)
             }
             holder.favListRVLayout.setOnClickListener {
                 favouriteMoviesRVAdapterClickListener.showFavouriteMovieDetailsOnClick(favourites[position].movieId)
