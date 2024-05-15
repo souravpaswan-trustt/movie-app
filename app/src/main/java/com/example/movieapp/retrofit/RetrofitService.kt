@@ -31,4 +31,16 @@ interface RetrofitService {
 
     @GET(APIConstants.MOVIE_SEARCH)
     suspend fun searchMovie(@Query("query") query: String, @Query("api_key") apiKey: String): Response<SearchResponse>
+
+    @GET(APIConstants.TOP_RATED_MOVIES)
+    suspend fun getTopRatedMovies(@Query("api_key") apiKey: String): Response<MovieList>
+
+    @GET(APIConstants.NOW_PLAYING_MOVIES)
+    suspend fun getNowPlayingMovies(@Query("api_key") apiKey: String): Response<MovieList>
+
+    @GET(APIConstants.UPCOMING_MOVIES)
+    suspend fun getUpcomingMovies(@Query("api_key") apiKey: String): Response<MovieList>
+
+    @GET(APIConstants.TRENDING_MOVIES)
+    suspend fun getTrendingMovies(@Query("api_key") apiKey: String): Response<MovieList>
 }

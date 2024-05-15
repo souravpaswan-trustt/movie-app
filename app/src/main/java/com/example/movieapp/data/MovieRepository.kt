@@ -19,4 +19,12 @@ class MovieRepository @Inject constructor(){
     suspend fun getVideoDetails(movieId: Int, apiKey: String) = retrofitService.getVideoDetails(movieId, apiKey)
 
     suspend fun searchMovie(query: String, apiKey: String) = retrofitService.searchMovie(query, apiKey)
+
+    suspend fun getTopRatedMovies(apiKey: String) = retrofitService.getTopRatedMovies(apiKey)
+
+    suspend fun getNowPlayingMovies(apiKey: String) = retrofitService.getNowPlayingMovies(apiKey)
+
+    suspend fun getUpcomingMovies(apiKey: String) = retrofitService.getUpcomingMovies(apiKey)
+
+    suspend fun getTrendingMovies(apiKey: String) = retrofitService.getTrendingMovies(apiKey)
 }

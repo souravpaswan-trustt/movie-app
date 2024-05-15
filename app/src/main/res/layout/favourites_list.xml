@@ -16,7 +16,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <LinearLayout
-        android:id="@+id/movieDetailsLinearLayout"
+        android:id="@+id/favouriteMovieDetailsLinearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"

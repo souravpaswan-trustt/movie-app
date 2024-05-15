@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         val repository = MovieRepository()
         val viewModelFactory = MainViewModelFactory(repository)
         mainViewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
-        mainViewModel.isGridView.value = false
+//        mainViewModel.isGridView.value = false
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -82,20 +82,20 @@ class MainActivity : AppCompatActivity() {
             navController.navigate(R.id.searchFragment)
         }
 
-        binding.toolbarRoot.listToggleImageView.setOnClickListener {
-            mainViewModel.isGridView.value = mainViewModel.isGridView.value?.not()
-        }
+//        binding.toolbarRoot.listToggleImageView.setOnClickListener {
+//            mainViewModel.isGridView.value = mainViewModel.isGridView.value?.not()
+//        }
 
-        mainViewModel.isGridView.observe(this, Observer {
-            val typedValue = TypedValue()
-            val theme = binding.toolbarRoot.listToggleImageView.context.theme
-            if(it){
-                theme.resolveAttribute(R.attr.listToggleIconDrawable, typedValue, true)
-            } else{
-                theme.resolveAttribute(R.attr.gridToggleIconDrawable, typedValue, true)
-            }
-            val drawableResId = typedValue.resourceId
-            binding.toolbarRoot.listToggleImageView.setImageResource(drawableResId)
-        })
+//        mainViewModel.isGridView.observe(this, Observer {
+//            val typedValue = TypedValue()
+//            val theme = binding.toolbarRoot.listToggleImageView.context.theme
+//            if(it){
+//                theme.resolveAttribute(R.attr.listToggleIconDrawable, typedValue, true)
+//            } else{
+//                theme.resolveAttribute(R.attr.gridToggleIconDrawable, typedValue, true)
+//            }
+//            val drawableResId = typedValue.resourceId
+//            binding.toolbarRoot.listToggleImageView.setImageResource(drawableResId)
+//        })
     }
 }

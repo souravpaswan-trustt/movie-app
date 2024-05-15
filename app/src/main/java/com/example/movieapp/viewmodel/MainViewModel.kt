@@ -8,6 +8,7 @@ import com.example.movieapp.model.GenreResponse
 import com.example.movieapp.model.MovieList
 import com.example.movieapp.data.MovieRepository
 import com.example.movieapp.model.CreditDetails
+import com.example.movieapp.model.Movie
 import com.example.movieapp.model.MovieDetails
 import com.example.movieapp.model.SearchResponse
 import com.example.movieapp.model.VideoDetails
@@ -35,7 +36,14 @@ class MainViewModel @Inject constructor(private val repository: MovieRepository)
     private val _searchResult = MutableLiveData<SearchResponse>()
     val searchResult: LiveData<SearchResponse> get() = _searchResult
 
-    var isGridView = MutableLiveData<Boolean>()
+    private val _topRatedMoviesLiveData = MutableLiveData<MovieList>()
+    val topRatedMoviesLiveData: LiveData<MovieList> get() = _topRatedMoviesLiveData
+
+    private val _nowPlayingMoviesLiveData = MutableLiveData<MovieList>()
+    val nowPlayingMoviesLiveData: LiveData<MovieList> get() = _nowPlayingMoviesLiveData
+
+    private val _upcomingMoviesLiveData = MutableLiveData<MovieList>()
+    val upcomingMoviesLiveData: LiveData<MovieList> get() = _upcomingMoviesLiveData
 
     suspend fun getPopularMovies(apiKey: String) {
         val response = repository.getPopularMovies(apiKey)
@@ -104,6 +112,42 @@ class MainViewModel @Inject constructor(private val repository: MovieRepository)
             response.body()?.let{
                 _searchResult.postValue(it)
                 Log.i("Retrofit", "Search results = $it")
+            }
+        } else{
+            Log.i("Retrofit", "Error : ${response.errorBody()}")
+        }
+    }
+
+    suspend fun getTopRatedMovies(apiKey: String){
+        val response = repository.getTopRatedMovies(apiKey)
+        if(response.isSuccessful){
+            response.body()?.let {
+                _topRatedMoviesLiveData.postValue(it)
+                Log.i("Retrofit", "Top rated movies = ${it.results}")
+            }
+        } else{
+            Log.i("Retrofit", "Error : ${response.errorBody()}")
+        }
+    }
+
+    suspend fun getNowPlayingMovies(apiKey: String){
+        val response = repository.getNowPlayingMovies(apiKey)
+        if(response.isSuccessful){
+            response.body()?.let {
+                _nowPlayingMoviesLiveData.postValue(it)
+                Log.i("Retrofit", "Now playing movies = ${it.results}")
+            }
+        } else{
+            Log.i("Retrofit", "Error : ${response.errorBody()}")
+        }
+    }
+
+    suspend fun getUpcomingMovies(apiKey: String){
+        val response = repository.getUpcomingMovies(apiKey)
+        if(response.isSuccessful){
+            response.body()?.let {
+                _upcomingMoviesLiveData.postValue(it)
+                Log.i("Retrofit", "Upcoming movies = ${it.results}")
             }
         } else{
             Log.i("Retrofit", "Error : ${response.errorBody()}")
