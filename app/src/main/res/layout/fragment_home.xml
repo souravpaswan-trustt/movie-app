@@ -19,22 +19,39 @@
                 android:layout_margin="10dp"
                 tools:context=".ui.homeScreen.HomeFragment">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/trendingThisWeekRecyclerView"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:id="@+id/trendingLinearLayout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Top Trending"
+                        android:layout_marginBottom="10dp"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/trendingThisWeekRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/popularLinearLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:layout_marginTop="15dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/trendingThisWeekRecyclerView">
+                    app:layout_constraintTop_toBottomOf="@id/trendingLinearLayout">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -119,7 +136,7 @@
                         android:id="@+id/upcomingRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="25dp"/>
+                        android:layout_marginBottom="25dp" />
 
                 </LinearLayout>
 

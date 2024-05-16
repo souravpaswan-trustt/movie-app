@@ -26,5 +26,5 @@ class MovieRepository @Inject constructor(){
 
     suspend fun getUpcomingMovies(apiKey: String) = retrofitService.getUpcomingMovies(apiKey)
 
-    suspend fun getTrendingMovies(apiKey: String) = retrofitService.getTrendingMovies(apiKey)
+    suspend fun getTrendingMovies(timeWindow: String, apiKey: String) = retrofitService.getTrendingMovies(timeWindow, apiKey)
 }

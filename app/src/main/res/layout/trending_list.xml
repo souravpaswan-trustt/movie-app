@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/trendingMoviesListLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="300dp"
+    android:layout_marginEnd="10dp">
+
+    <TextView
+        android:id="@+id/trendingMovieNumberTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bungee_outline"
+        android:text="No"
+        android:textSize="100sp"
+        android:textStyle="bold"
+        android:layout_alignParentStart="true"/>
+
+    <ImageView
+        android:id="@+id/trendingMoviePosterImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        tools:srcCompat="@tools:sample/avatars"
+        android:layout_marginStart="100dp"/>
+
+</RelativeLayout>

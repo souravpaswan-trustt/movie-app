@@ -40,7 +40,7 @@ class HomeFragment : Fragment() {
     private lateinit var topRatedMoviesAdapter: MoviesListRVAdapter
     private lateinit var nowPlayingMoviesAdapter: MoviesListRVAdapter
     private lateinit var upcomingMoviesAdapter: MoviesListRVAdapter
-    private lateinit var trendingMoviesAdapter: MoviesListRVAdapter
+    private lateinit var trendingMoviesAdapter: TrendingMoviesRVAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,8 +50,7 @@ class HomeFragment : Fragment() {
         binding.lifecycleOwner = this
         val repository = MovieRepository()
         val viewModelFactory = MainViewModelFactory(repository)
-        mainViewModel =
-            ViewModelProvider(requireActivity(), viewModelFactory)[MainViewModel::class.java]
+        mainViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[MainViewModel::class.java]
 
         val dao = FavouriteMovieDb.getInstance(requireActivity()).favouriteMovieDao
         favRepository = FavouriteMovieRepository(dao)
@@ -69,9 +68,6 @@ class HomeFragment : Fragment() {
                 }
                 .show()
         }
-        lifecycleScope.launch {
-            mainViewModel.getGenres(APIConstants.API_KEY)
-        }
         return binding.root
     }
 
@@ -79,12 +75,11 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val swipeRefreshLayout = binding.swipeRefreshLayout
 
-        //initialising the adapters
         popularMoviesAdapter = initialiseAdapter(binding.popularRecyclerView)
         topRatedMoviesAdapter = initialiseAdapter(binding.topRatedRecyclerView)
         nowPlayingMoviesAdapter = initialiseAdapter(binding.nowPlayingRecyclerView)
         upcomingMoviesAdapter = initialiseAdapter(binding.upcomingRecyclerView)
-        trendingMoviesAdapter = initialiseAdapter(binding.trendingThisWeekRecyclerView)
+//        trendingMoviesAdapter = initialiseAdapter(binding.trendingThisWeekRecyclerView)
 
         swipeRefreshLayout.setOnRefreshListener {
             displayPopularMovies()
@@ -185,6 +180,30 @@ class HomeFragment : Fragment() {
     }
 
     private fun displayTrendingMovies() {
-        //("Not yet implemented")
+        binding.trendingThisWeekRecyclerView.layoutManager = LinearLayoutManager(requireContext(),
+            LinearLayoutManager.HORIZONTAL, false)
+
+        lifecycleScope.launch {
+            mainViewModel.getTrendingMovies("week", APIConstants.API_KEY)
+            withContext(Dispatchers.Main){
+                mainViewModel.trendingMoviesLiveData.observe(viewLifecycleOwner, Observer {
+                    if (it != null && it.results.isNotEmpty()) {
+                        trendingMoviesAdapter = TrendingMoviesRVAdapter(
+                            it.results,
+                            object: TrendingMoviesRVAdapter.TrendingMoviesClickListener{
+                                override fun movieOnClickListener(movieId: Int) {
+                                    mainViewModel.currentMovieId.value = movieId
+                                    findNavController().navigate(R.id.action_navigation_home_to_movieDetailsFragment2)
+                                }
+                            }
+                        )
+                        binding.trendingThisWeekRecyclerView.adapter = trendingMoviesAdapter
+                    } else {
+                        Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                })
+            }
+        }
     }
 }

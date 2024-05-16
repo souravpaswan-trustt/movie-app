@@ -25,10 +25,14 @@ class MoviesListRVAdapter(
         val moviePosterImageView: ImageView = itemView.findViewById(R.id.moviePosterImageView)
         val movieReleaseDateTextView: TextView = itemView.findViewById(R.id.movieReleaseDateTextView)
         val movieRatingTextView: TextView = itemView.findViewById(R.id.movieRatingTextView)
-//        var movieGenreTextView: TextView = null
         val movieDetailsLayout: RelativeLayout? = itemView.findViewById(R.id.movieDetailsLayout)
 
     }
+
+//    inner class TrendingViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+//        val trendingMoviePosterImageView: ImageView = itemView.findViewById(R.id.trendingMoviePosterImageView)
+//        val trendingMovieNumberTextView: TextView = itemView.findViewById(R.id.trendingMovieNumberTextView)
+//    }
 
     interface MoviesRVAdapterClickListener {
         fun movieOnClickListener(movieId: Int)

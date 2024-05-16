@@ -45,6 +45,9 @@ class MainViewModel @Inject constructor(private val repository: MovieRepository)
     private val _upcomingMoviesLiveData = MutableLiveData<MovieList>()
     val upcomingMoviesLiveData: LiveData<MovieList> get() = _upcomingMoviesLiveData
 
+    private val _trendingMoviesLiveData = MutableLiveData<MovieList>()
+    val trendingMoviesLiveData: LiveData<MovieList> get() = _trendingMoviesLiveData
+
     suspend fun getPopularMovies(apiKey: String) {
         val response = repository.getPopularMovies(apiKey)
         if (response.isSuccessful) {
@@ -148,6 +151,18 @@ class MainViewModel @Inject constructor(private val repository: MovieRepository)
             response.body()?.let {
                 _upcomingMoviesLiveData.postValue(it)
                 Log.i("Retrofit", "Upcoming movies = ${it.results}")
+            }
+        } else{
+            Log.i("Retrofit", "Error : ${response.errorBody()}")
+        }
+    }
+
+    suspend fun getTrendingMovies(timeWindow: String, apiKey: String){
+        val response = repository.getTrendingMovies(timeWindow, apiKey)
+        if(response.isSuccessful){
+            response.body()?.let {
+                _trendingMoviesLiveData.postValue(it)
+                Log.i("Retrofit", "Trending movies = ${it.results}")
             }
         } else{
             Log.i("Retrofit", "Error : ${response.errorBody()}")

@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
         val repository = MovieRepository()
         val viewModelFactory = MainViewModelFactory(repository)
         mainViewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
-//        mainViewModel.isGridView.value = false
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -48,31 +47,26 @@ class MainActivity : AppCompatActivity() {
             when (destination.id) {
                 R.id.navigation_home -> {
                     binding.toolbarRoot.toolbarText.text = getString(R.string.top_movies)
-                    binding.toolbarRoot.listToggleImageView.visibility = View.VISIBLE
                     binding.toolbarRoot.searchImageView.visibility = View.VISIBLE
                 }
 
                 R.id.navigation_favourites -> {
                     binding.toolbarRoot.toolbarText.text = getString(R.string.favourites)
-                    binding.toolbarRoot.listToggleImageView.visibility = View.INVISIBLE
                     binding.toolbarRoot.searchImageView.visibility = View.VISIBLE
                 }
 
                 R.id.navigation_settings -> {
                     binding.toolbarRoot.toolbarText.text = getString(R.string.settings)
-                    binding.toolbarRoot.listToggleImageView.visibility = View.INVISIBLE
                     binding.toolbarRoot.searchImageView.visibility = View.VISIBLE
                 }
 
                 R.id.movieDetailsFragment2 -> {
                     binding.toolbarRoot.toolbarText.text = getString(R.string.movie_details)
-                    binding.toolbarRoot.listToggleImageView.visibility = View.INVISIBLE
                     binding.toolbarRoot.searchImageView.visibility = View.INVISIBLE
                 }
 
                 R.id.searchFragment -> {
                     binding.toolbarRoot.toolbarText.text = getString(R.string.movie_search)
-                    binding.toolbarRoot.listToggleImageView.visibility = View.INVISIBLE
                     binding.toolbarRoot.searchImageView.visibility = View.INVISIBLE
                 }
             }
@@ -81,21 +75,5 @@ class MainActivity : AppCompatActivity() {
         binding.toolbarRoot.searchImageView.setOnClickListener {
             navController.navigate(R.id.searchFragment)
         }
-
-//        binding.toolbarRoot.listToggleImageView.setOnClickListener {
-//            mainViewModel.isGridView.value = mainViewModel.isGridView.value?.not()
-//        }
-
-//        mainViewModel.isGridView.observe(this, Observer {
-//            val typedValue = TypedValue()
-//            val theme = binding.toolbarRoot.listToggleImageView.context.theme
-//            if(it){
-//                theme.resolveAttribute(R.attr.listToggleIconDrawable, typedValue, true)
-//            } else{
-//                theme.resolveAttribute(R.attr.gridToggleIconDrawable, typedValue, true)
-//            }
-//            val drawableResId = typedValue.resourceId
-//            binding.toolbarRoot.listToggleImageView.setImageResource(drawableResId)
-//        })
     }
 }
