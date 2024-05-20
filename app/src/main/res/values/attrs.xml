@@ -10,4 +10,5 @@
     <attr name="gridToggleIconDrawable" format="reference"/>
     <attr name="listToggleIconDrawable" format="reference"/>
     <attr name="searchViewBackgroundColor" format="color"/>
+    <attr name="toolbarBackIcon" format="reference"/>
 </resources>

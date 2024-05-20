@@ -44,7 +44,7 @@ class SearchResultsRVAdapter(
 
         }
         holder.searchListLayout.setOnClickListener {
-            searchResultItemOnClickListener.showSearchItemMovieDetails(searchResult[position].id)
+            searchResultItemOnClickListener.showSearchItemMovieDetails(searchResult[position].id!!)
         }
     }
 }

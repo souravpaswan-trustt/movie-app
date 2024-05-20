@@ -46,34 +46,43 @@ class MainActivity : AppCompatActivity() {
             }
             when (destination.id) {
                 R.id.navigation_home -> {
-                    binding.toolbarRoot.toolbarText.text = getString(R.string.top_movies)
+                    binding.toolbarRoot.toolbarText.text = "Movie App"
                     binding.toolbarRoot.searchImageView.visibility = View.VISIBLE
+                    binding.toolbarRoot.toolbarBackButton.visibility = View.INVISIBLE
                 }
 
                 R.id.navigation_favourites -> {
                     binding.toolbarRoot.toolbarText.text = getString(R.string.favourites)
-                    binding.toolbarRoot.searchImageView.visibility = View.VISIBLE
+                    binding.toolbarRoot.searchImageView.visibility = View.INVISIBLE
+                    binding.toolbarRoot.toolbarBackButton.visibility = View.INVISIBLE
                 }
 
                 R.id.navigation_settings -> {
                     binding.toolbarRoot.toolbarText.text = getString(R.string.settings)
-                    binding.toolbarRoot.searchImageView.visibility = View.VISIBLE
+                    binding.toolbarRoot.searchImageView.visibility = View.INVISIBLE
+                    binding.toolbarRoot.toolbarBackButton.visibility = View.INVISIBLE
                 }
 
                 R.id.movieDetailsFragment2 -> {
                     binding.toolbarRoot.toolbarText.text = getString(R.string.movie_details)
                     binding.toolbarRoot.searchImageView.visibility = View.INVISIBLE
+                    binding.toolbarRoot.toolbarBackButton.visibility = View.VISIBLE
                 }
 
                 R.id.searchFragment -> {
                     binding.toolbarRoot.toolbarText.text = getString(R.string.movie_search)
                     binding.toolbarRoot.searchImageView.visibility = View.INVISIBLE
+                    binding.toolbarRoot.toolbarBackButton.visibility = View.VISIBLE
                 }
             }
         }
 
         binding.toolbarRoot.searchImageView.setOnClickListener {
             navController.navigate(R.id.searchFragment)
+        }
+
+        binding.toolbarRoot.toolbarBackButton.setOnClickListener {
+            navController.navigate(R.id.navigation_home)
         }
     }
 }

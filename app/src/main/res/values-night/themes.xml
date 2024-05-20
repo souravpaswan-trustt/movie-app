@@ -5,7 +5,7 @@
         <item name="colorPrimary">@color/black</item>
         <item name="colorOnPrimary">@color/black</item>
         <item name="android:textColor">@color/white</item>
-        <item name="toolbarTextColor">@color/yellow</item>
+        <item name="toolbarTextColor">@color/red</item>
         <item name="searchViewBackgroundColor">@color/black</item>
         <item name="releaseDateIconDrawable">@drawable/outline_calendar_today_24</item>
         <item name="ratingIconDrawable">@drawable/baseline_star_border_24</item>
@@ -15,5 +15,15 @@
         <item name="searchIconDrawable">@drawable/outline_search_24</item>
         <item name="listToggleIconDrawable">@drawable/outline_view_list_24</item>
         <item name="gridToggleIconDrawable">@drawable/outline_grid_view_24</item>
+        <item name="toolbarBackIcon">@drawable/outline_arrow_back_24</item>
     </style>
+
+    <style name="Theme.MovieApp" parent="Base.Theme.MovieApp" />
+
+    <style name="Theme.App.SplashSceren" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/black</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/app_icon</item>
+        <item name="postSplashScreenTheme">@style/Base.Theme.MovieApp</item>
+    </style>
+
 </resources>

@@ -90,6 +90,9 @@ dependencies {
     kapt("com.google.dagger:dagger-compiler:2.51.1")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
     implementation("androidx.core:core-splashscreen:1.0.0")
+    implementation("com.squareup.moshi:moshi:1.12.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.12.0")
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
 
 
     implementation(libs.androidx.core.ktx)

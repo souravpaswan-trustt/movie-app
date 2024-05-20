@@ -115,7 +115,7 @@ class HomeFragment : Fragment() {
             mainViewModel.getPopularMovies(APIConstants.API_KEY)
             withContext(Dispatchers.Main) {
                 mainViewModel.popularMoviesLiveData.observe(viewLifecycleOwner, Observer {
-                    if (it != null && it.results.isNotEmpty()) {
+                    if (it != null && !it.results.isNullOrEmpty()) {
                         popularMoviesAdapter.movies = it.results
                         popularMoviesAdapter.notifyDataSetChanged()
                     } else {
@@ -132,7 +132,7 @@ class HomeFragment : Fragment() {
             mainViewModel.getTopRatedMovies(APIConstants.API_KEY)
             withContext(Dispatchers.Main) {
                 mainViewModel.topRatedMoviesLiveData.observe(viewLifecycleOwner, Observer {
-                    if (it != null && it.results.isNotEmpty()) {
+                    if (it != null && !it.results.isNullOrEmpty()) {
                         topRatedMoviesAdapter.movies = it.results
                         topRatedMoviesAdapter.notifyDataSetChanged()
                         binding.topRatedRecyclerView.adapter = topRatedMoviesAdapter
@@ -150,7 +150,7 @@ class HomeFragment : Fragment() {
             mainViewModel.getNowPlayingMovies(APIConstants.API_KEY)
             withContext(Dispatchers.Main) {
                 mainViewModel.nowPlayingMoviesLiveData.observe(viewLifecycleOwner, Observer {
-                    if (it != null && it.results.isNotEmpty()) {
+                    if (it != null && !it.results.isNullOrEmpty()) {
                         nowPlayingMoviesAdapter.movies = it.results
                         nowPlayingMoviesAdapter.notifyDataSetChanged()
                     } else {
@@ -167,7 +167,7 @@ class HomeFragment : Fragment() {
             mainViewModel.getUpcomingMovies(APIConstants.API_KEY)
             withContext(Dispatchers.Main) {
                 mainViewModel.upcomingMoviesLiveData.observe(viewLifecycleOwner, Observer {
-                    if (it != null && it.results.isNotEmpty()) {
+                    if (it != null && !it.results.isNullOrEmpty()) {
                         upcomingMoviesAdapter.movies = it.results
                         upcomingMoviesAdapter.notifyDataSetChanged()
                     } else {
@@ -187,7 +187,7 @@ class HomeFragment : Fragment() {
             mainViewModel.getTrendingMovies("week", APIConstants.API_KEY)
             withContext(Dispatchers.Main){
                 mainViewModel.trendingMoviesLiveData.observe(viewLifecycleOwner, Observer {
-                    if (it != null && it.results.isNotEmpty()) {
+                    if (it != null && !it.results.isNullOrEmpty()) {
                         trendingMoviesAdapter = TrendingMoviesRVAdapter(
                             it.results,
                             object: TrendingMoviesRVAdapter.TrendingMoviesClickListener{

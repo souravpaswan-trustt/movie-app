@@ -117,7 +117,7 @@ class SearchFragment : Fragment() {
 
     private suspend fun updateSearchResults(searchResult: SearchResponse?) {
         withContext(Dispatchers.Main) {
-            if (searchResult != null && searchResult.results.isNotEmpty()) {
+            if (searchResult != null && !searchResult.results.isNullOrEmpty()) {
                 binding.searchResultRecyclerView.visibility = View.VISIBLE
                 binding.searchResultTextView.visibility = View.GONE
                 searchResultsAdapter.searchResult = searchResult.results

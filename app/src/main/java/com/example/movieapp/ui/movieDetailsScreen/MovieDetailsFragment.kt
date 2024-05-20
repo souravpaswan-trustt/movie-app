@@ -62,7 +62,7 @@ class MovieDetailsFragment : Fragment() {
                 Log.i("Retrofit", "Backgrop url = $imageUrl")
             }
             binding.movieDetailsRatingTextView.text = "Rating: " + it.vote_average.toString().substring(0,3)
-            binding.movieDetailsGenreTextView.text = "Genres: " + displayGenres(it.genres)
+            binding.movieDetailsGenreTextView.text = "Genres: " + displayGenres(it.genres!!)
             checkDataLoaded()
         })
         getCastDetails()
@@ -77,7 +77,7 @@ class MovieDetailsFragment : Fragment() {
                     binding.castMembersRecyclerView.layoutManager =
                         LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
-                    binding.castMembersRecyclerView.adapter = MovieCastRVAdapter(it.cast)
+                    binding.castMembersRecyclerView.adapter = MovieCastRVAdapter(it.cast!!)
                 }
                 checkDataLoaded()
             })
@@ -89,9 +89,9 @@ class MovieDetailsFragment : Fragment() {
             mainViewModel.getVideoDetails(mainViewModel.currentMovieId.value!!, APIConstants.API_KEY)
             mainViewModel.videoDetails.observe(viewLifecycleOwner, Observer {
                 trailerPaths.clear()
-                for(x in it.results){
+                for(x in it.results!!){
                     if(x.type.equals("Trailer", ignoreCase = true)) {
-                        trailerPaths.add(x.key)
+                        trailerPaths.add(x.key!!)
                     }
                 }
                 Log.i("Retrofit", "Video key $trailerPaths")

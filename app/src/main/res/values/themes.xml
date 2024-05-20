@@ -15,6 +15,7 @@
         <item name="searchIconDrawable">@drawable/baseline_search_24</item>
         <item name="listToggleIconDrawable">@drawable/baseline_list_24</item>
         <item name="gridToggleIconDrawable">@drawable/baseline_grid_view_24</item>
+        <item name="toolbarBackIcon">@drawable/baseline_arrow_back_24</item>
     </style>
 
     <style name="Theme.MovieApp" parent="Base.Theme.MovieApp" />

@@ -34,18 +34,19 @@ class TrendingMoviesRVAdapter(
     }
 
     override fun getItemCount(): Int {
-        return movies.size
+        return Integer.MAX_VALUE
     }
 
     override fun onBindViewHolder(holder: TrendingMoviesViewHolder, position: Int) {
+        val actualPosition = position % movies.size
         if(!movies.isNullOrEmpty()){
-            val imageUrl = APIConstants.IMAGE_PATH + movies[position].poster_path
+            val imageUrl = APIConstants.IMAGE_PATH + movies[actualPosition].poster_path
             Glide.with(holder.trendingMoviePosterImageView)
                 .load(imageUrl)
                 .into(holder.trendingMoviePosterImageView)
-            holder.trendingMovieNumberTextView.text = (position + 1).toString()
+            holder.trendingMovieNumberTextView.text = (actualPosition + 1).toString()
             holder.trendingMoviesListLayout.setOnClickListener {
-                trendingMoviesClickListener.movieOnClickListener(movies[position].id)
+                trendingMoviesClickListener.movieOnClickListener(movies[actualPosition].id!!)
             }
         } else {
             Toast.makeText(holder.itemView.context, "No movies found", Toast.LENGTH_SHORT).show()

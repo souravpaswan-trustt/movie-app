@@ -28,12 +28,6 @@ class MoviesListRVAdapter(
         val movieDetailsLayout: RelativeLayout? = itemView.findViewById(R.id.movieDetailsLayout)
 
     }
-
-//    inner class TrendingViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-//        val trendingMoviePosterImageView: ImageView = itemView.findViewById(R.id.trendingMoviePosterImageView)
-//        val trendingMovieNumberTextView: TextView = itemView.findViewById(R.id.trendingMovieNumberTextView)
-//    }
-
     interface MoviesRVAdapterClickListener {
         fun movieOnClickListener(movieId: Int)
     }
@@ -51,14 +45,14 @@ class MoviesListRVAdapter(
         if (!movies.isNullOrEmpty()) {
             val imageUrl = APIConstants.IMAGE_PATH + movies[position].poster_path
             holder.movieTitleTextView.text = movies[position].title
-            holder.movieReleaseDateTextView.text = movies[position].release_date.substring(0, 4)
+            holder.movieReleaseDateTextView.text = movies[position].release_date!!.substring(0, 4)
             holder.movieRatingTextView.text =
                 movies[position].vote_average.toString().substring(0, 3)
             Glide.with(holder.moviePosterImageView)
                 .load(imageUrl)
                 .into(holder.moviePosterImageView)
             holder.movieDetailsLayout?.setOnClickListener {
-                moviesRVAdapterClickListener.movieOnClickListener(movies[position].id)
+                moviesRVAdapterClickListener.movieOnClickListener(movies[position].id!!)
             }
         } else {
             Toast.makeText(holder.itemView.context, "No movies found", Toast.LENGTH_SHORT).show()
