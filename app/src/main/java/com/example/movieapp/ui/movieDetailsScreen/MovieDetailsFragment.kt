@@ -2,6 +2,7 @@ package com.example.movieapp.ui.movieDetailsScreen
 
 import android.os.Bundle
 import android.util.Log
+import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,8 +15,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.movieapp.R
 import com.example.movieapp.data.MovieRepository
+import com.example.movieapp.database.FavouriteMovie
+import com.example.movieapp.database.FavouriteMovieDao
+import com.example.movieapp.database.FavouriteMovieDb
+import com.example.movieapp.database.FavouriteMovieRepository
 import com.example.movieapp.databinding.FragmentMovieDetailsBinding
 import com.example.movieapp.model.Genre
+import com.example.movieapp.ui.favouritesScreen.FavouriteMovieViewModel
+import com.example.movieapp.ui.favouritesScreen.FavouriteMovieViewModelFactory
 import com.example.movieapp.utils.APIConstants
 import com.example.movieapp.viewmodel.MainViewModel
 import com.example.movieapp.viewmodel.MainViewModelFactory
@@ -25,6 +32,8 @@ class MovieDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentMovieDetailsBinding
     private lateinit var mainViewModel: MainViewModel
+    private lateinit var favouriteMovieViewModel: FavouriteMovieViewModel
+    private lateinit var favRepository: FavouriteMovieRepository
     private val trailerPaths = mutableListOf<String>()
 
     override fun onCreateView(
@@ -37,6 +46,11 @@ class MovieDetailsFragment : Fragment() {
         mainViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[MainViewModel::class.java]
         binding.myViewModel = mainViewModel
         binding.lifecycleOwner = this
+
+        val dao = FavouriteMovieDb.getInstance(requireActivity()).favouriteMovieDao
+        favRepository = FavouriteMovieRepository(dao)
+        val favVMFactory = FavouriteMovieViewModelFactory(favRepository)
+        favouriteMovieViewModel = ViewModelProvider(requireActivity(), favVMFactory)[FavouriteMovieViewModel::class.java]
         return binding.root
     }
 
@@ -65,6 +79,7 @@ class MovieDetailsFragment : Fragment() {
             binding.movieDetailsGenreTextView.text = "Genres: " + displayGenres(it.genres!!)
             checkDataLoaded()
         })
+        addToFavouriteObserver()
         getCastDetails()
         getVideoDetails()
     }
@@ -114,16 +129,43 @@ class MovieDetailsFragment : Fragment() {
         return movieGenres.substring(0, movieGenres.length - 2)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Glide.with(this).clear(binding.movieDetailsPosterImageView)
-    }
-
     private fun checkDataLoaded() {
         if (mainViewModel.movieDetails.value != null &&
             mainViewModel.creditDetails.value != null &&
             mainViewModel.videoDetails.value != null) {
             binding.progressBar2.visibility = View.GONE
         }
+    }
+
+    private fun addToFavouriteObserver(){
+        mainViewModel.movieDetails.observe(viewLifecycleOwner, Observer {
+            val imageUrl = APIConstants.IMAGE_PATH + it.poster_path
+            val favouriteMovie = FavouriteMovie(it.id!!, it.title!!, it.release_date!!, imageUrl, it.vote_average!!)
+            lifecycleScope.launch {
+                val existingMovie = favRepository.getMovieById(it.id)
+                if(existingMovie != null){
+                    binding.addToFavouriteButton.setImageResource(R.drawable.baseline_favorite_red_24)
+                } else{
+                    changeImageAttribute()
+                }
+                binding.addToFavouriteButton.setOnClickListener {
+                    if(existingMovie != null){
+                        favouriteMovieViewModel.remove(favouriteMovie)
+                        changeImageAttribute()
+                    } else {
+                        favouriteMovieViewModel.insert(favouriteMovie)
+                        binding.addToFavouriteButton.setImageResource(R.drawable.baseline_favorite_red_24)
+                    }
+                }
+            }
+        })
+    }
+
+    private fun changeImageAttribute(){
+        val typedValue = TypedValue()
+        val theme = binding.addToFavouriteButton.context.theme
+        theme.resolveAttribute(R.attr.addFavouriteIconDrawable, typedValue, true)
+        val drawableId = typedValue.resourceId
+        binding.addToFavouriteButton.setImageResource(drawableId)
     }
 }

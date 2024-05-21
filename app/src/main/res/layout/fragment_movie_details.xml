@@ -62,8 +62,8 @@
 
                 </com.google.android.material.card.MaterialCardView>
 
-                <LinearLayout
-                    android:id="@+id/movieDetailsLinearLayout"
+                <RelativeLayout
+                    android:id="@+id/movieDetailsRelativeLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
@@ -89,7 +89,18 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="5dp"
                         android:text="@{myViewModel.movieDetails.release_date}"
+                        android:layout_below="@+id/movieTitleTextView"
                         android:textSize="12sp" />
+
+                    <ImageView
+                        android:id="@+id/addToFavouriteButton"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_below="@+id/movieTitleTextView"
+                        android:layout_toEndOf="@id/movieReleaseDateTextView"
+                        android:src="?attr/addFavouriteIconDrawable"/>
 
                     <TextView
                         android:id="@+id/movieDetailsRatingTextView"
@@ -97,6 +108,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="5dp"
+                        android:layout_below="@+id/movieReleaseDateTextView"
                         android:textSize="12sp" />
 
                     <TextView
@@ -106,9 +118,10 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="5dp"
                         android:text="Genres"
+                        android:layout_below="@+id/movieDetailsRatingTextView"
                         android:textSize="12sp" />
 
-                </LinearLayout>
+                </RelativeLayout>
 
             </FrameLayout>
 

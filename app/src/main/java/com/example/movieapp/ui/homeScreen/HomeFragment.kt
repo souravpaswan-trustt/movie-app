@@ -1,7 +1,5 @@
 package com.example.movieapp.ui.homeScreen
-
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -79,7 +77,6 @@ class HomeFragment : Fragment() {
         topRatedMoviesAdapter = initialiseAdapter(binding.topRatedRecyclerView)
         nowPlayingMoviesAdapter = initialiseAdapter(binding.nowPlayingRecyclerView)
         upcomingMoviesAdapter = initialiseAdapter(binding.upcomingRecyclerView)
-//        trendingMoviesAdapter = initialiseAdapter(binding.trendingThisWeekRecyclerView)
 
         swipeRefreshLayout.setOnRefreshListener {
             displayPopularMovies()
@@ -119,7 +116,7 @@ class HomeFragment : Fragment() {
                         popularMoviesAdapter.movies = it.results
                         popularMoviesAdapter.notifyDataSetChanged()
                     } else {
-                        Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT)
+                        Toast.makeText(requireContext(), getString(R.string.error_message), Toast.LENGTH_SHORT)
                             .show()
                     }
                 })
@@ -137,7 +134,7 @@ class HomeFragment : Fragment() {
                         topRatedMoviesAdapter.notifyDataSetChanged()
                         binding.topRatedRecyclerView.adapter = topRatedMoviesAdapter
                     } else {
-                        Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT)
+                        Toast.makeText(requireContext(), getString(R.string.error_message), Toast.LENGTH_SHORT)
                             .show()
                     }
                 })
@@ -154,7 +151,7 @@ class HomeFragment : Fragment() {
                         nowPlayingMoviesAdapter.movies = it.results
                         nowPlayingMoviesAdapter.notifyDataSetChanged()
                     } else {
-                        Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT)
+                        Toast.makeText(requireContext(), getString(R.string.error_message), Toast.LENGTH_SHORT)
                             .show()
                     }
                 })
@@ -171,7 +168,7 @@ class HomeFragment : Fragment() {
                         upcomingMoviesAdapter.movies = it.results
                         upcomingMoviesAdapter.notifyDataSetChanged()
                     } else {
-                        Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT)
+                        Toast.makeText(requireContext(), getString(R.string.error_message), Toast.LENGTH_SHORT)
                             .show()
                     }
                 })
@@ -199,7 +196,7 @@ class HomeFragment : Fragment() {
                         )
                         binding.trendingThisWeekRecyclerView.adapter = trendingMoviesAdapter
                     } else {
-                        Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT)
+                        Toast.makeText(requireContext(), getString(R.string.error_message), Toast.LENGTH_SHORT)
                             .show()
                     }
                 })
