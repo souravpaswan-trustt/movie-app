@@ -1,15 +1,13 @@
 package com.example.movieapp.ui.favouritesScreen
 
 import android.util.Log
-import android.widget.Toast
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.example.movieapp.database.FavouriteMovie
 import com.example.movieapp.database.FavouriteMovieRepository
 import androidx.lifecycle.viewModelScope
+import com.example.movieapp.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -21,18 +19,13 @@ class FavouriteMovieViewModel(private val repository: FavouriteMovieRepository):
     private val _statusMessage = MutableLiveData<String>()
     val statusMessage: LiveData<String> get() = _statusMessage
 
-    private val _favouriteMovieDetails = MutableLiveData<FavouriteMovie>()
-    val favouriteMovieDetails: LiveData<FavouriteMovie> get() = _favouriteMovieDetails
+    private val _currentMovie = MutableLiveData<FavouriteMovie?>()
+    val currentMovie: LiveData<FavouriteMovie?> get() = _currentMovie
 
     fun insert(favouriteMovie: FavouriteMovie) = viewModelScope.launch(Dispatchers.IO) {
         try {
-            val existingMovie = repository.getMovieById(favouriteMovie.movieId)
-            if (existingMovie != null) {
-                Log.i("RoomDB", "Movie with id ${favouriteMovie.movieId} already exists in the database.")
-            } else {
-                repository.insert(favouriteMovie)
-                _favouriteMovieDetails.postValue(favouriteMovie)
-            }
+            repository.insert(favouriteMovie)
+            getCurrentMovie(favouriteMovie)
         } catch (e: Exception) {
             Log.e("RoomDB", "Failed to insert movie", e)
             _statusMessage.postValue("Something went wrong!")
@@ -40,10 +33,19 @@ class FavouriteMovieViewModel(private val repository: FavouriteMovieRepository):
     }
 
     fun remove(favouriteMovie: FavouriteMovie) = viewModelScope.launch(Dispatchers.IO) {
-        try{
+        try {
             repository.delete(favouriteMovie)
-            _statusMessage.postValue("Removed from favourites")
-        } catch(e: Exception){
+            getCurrentMovie(favouriteMovie)
+        } catch (e: Exception) {
+            _statusMessage.postValue("Something went wrong!")
+        }
+    }
+
+    fun getCurrentMovie(favouriteMovie: FavouriteMovie) = viewModelScope.launch(Dispatchers.IO) {
+        try {
+            val movie = repository.getMovieById(favouriteMovie.movieId)
+            _currentMovie.postValue(movie)
+        } catch (e: Exception) {
             _statusMessage.postValue("Something went wrong!")
         }
     }

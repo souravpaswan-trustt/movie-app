@@ -16,7 +16,6 @@ import com.bumptech.glide.Glide
 import com.example.movieapp.R
 import com.example.movieapp.data.MovieRepository
 import com.example.movieapp.database.FavouriteMovie
-import com.example.movieapp.database.FavouriteMovieDao
 import com.example.movieapp.database.FavouriteMovieDb
 import com.example.movieapp.database.FavouriteMovieRepository
 import com.example.movieapp.databinding.FragmentMovieDetailsBinding
@@ -137,28 +136,38 @@ class MovieDetailsFragment : Fragment() {
         }
     }
 
-    private fun addToFavouriteObserver(){
-        mainViewModel.movieDetails.observe(viewLifecycleOwner, Observer {
-            val imageUrl = APIConstants.IMAGE_PATH + it.poster_path
-            val favouriteMovie = FavouriteMovie(it.id!!, it.title!!, it.release_date!!, imageUrl, it.vote_average!!)
-            lifecycleScope.launch {
-                val existingMovie = favRepository.getMovieById(it.id)
-                if(existingMovie != null){
-                    binding.addToFavouriteButton.setImageResource(R.drawable.baseline_favorite_red_24)
-                } else{
-                    changeImageAttribute()
-                }
-                binding.addToFavouriteButton.setOnClickListener {
-                    if(existingMovie != null){
-                        favouriteMovieViewModel.remove(favouriteMovie)
-                        changeImageAttribute()
-                    } else {
-                        favouriteMovieViewModel.insert(favouriteMovie)
-                        binding.addToFavouriteButton.setImageResource(R.drawable.baseline_favorite_red_24)
+    private fun addToFavouriteObserver() {
+        mainViewModel.movieDetails.observe(viewLifecycleOwner, Observer { movie ->
+            movie?.let {
+                val imageUrl = APIConstants.IMAGE_PATH + it.poster_path
+                val favouriteMovie = FavouriteMovie(it.id!!, it.title!!, it.release_date!!, imageUrl, it.vote_average!!)
+
+                favouriteMovieViewModel.getCurrentMovie(favouriteMovie)
+                favouriteMovieViewModel.currentMovie.observe(viewLifecycleOwner, Observer { favourite ->
+                    updateFavouriteButton(favourite != null)
+
+                    binding.addToFavouriteButton.setOnClickListener {
+                        lifecycleScope.launch {
+                            if (favourite != null) {
+                                favouriteMovieViewModel.remove(favouriteMovie)
+                                updateFavouriteButton(false)
+                            } else {
+                                favouriteMovieViewModel.insert(favouriteMovie)
+                                updateFavouriteButton(true)
+                            }
+                        }
                     }
-                }
+                })
             }
         })
+    }
+
+    private fun updateFavouriteButton(isFavourite: Boolean) {
+        if (isFavourite) {
+            binding.addToFavouriteButton.setImageResource(R.drawable.baseline_favorite_red_24)
+        } else {
+            changeImageAttribute()
+        }
     }
 
     private fun changeImageAttribute(){
